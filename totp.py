@@ -13,6 +13,7 @@ import base64
 import pytz
 
 
+
 class TOTPElement:
     def __init__(self, secret: str):
         """Initialize the TOTPElement with a secret.
@@ -62,17 +63,13 @@ class TOTPElement:
             codes.append((hour, code))
         return codes
 
+
+
+
+
+                    
+        
+
         
 if __name__ == "__main__":
-    secret = input("Enter the family link's code: ")
-    totp_element = TOTPElement(secret)
-    time_zone = "" # Config timezone
-    if time_zone == "":
-        codes = totp_element.get_a_day_codes()
-    else:
-        codes = totp_element.get_a_day_codes(time_zone)
-    for hour, code in codes:
-        print(f"Hour: {hour:02d}:00 - Code: {code}")
-    print("\nThe code for this hour is: " + totp_element.get_totp_code())
-    input("\nPress enter to exit...")
-    
+    os.system("python cli-flink.py")
