@@ -21,7 +21,8 @@ def config_load():
                 if line.startswith("SECRET="):
                     config["secret"] = line.split("=")[1].strip()
                     print(f"Secret loaded: {config['secret']}")
-    return config
+        return config
+    return {}
 
 
 def config_save(timezone=False, secret=False):
