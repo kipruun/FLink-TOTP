@@ -1,5 +1,5 @@
 # Family TOTP generator
-Thanks to [Rifting](https://gist.github.com/rifting) to the method. ([post used](https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570?permalink_comment_id=5180196#gistcomment-5180196))
+Thanks to [Rifting](https://gist.github.com/rifting) for the method. ([post used](https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570?permalink_comment_id=5180196#gistcomment-5180196))
  
  
 ## APP (totp.py)
