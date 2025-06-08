@@ -27,8 +27,12 @@ Thanks to [Rifting](https://gist.github.com/rifting) for the method. ([post used
           [2] - Configuration
           [3] - Exit
           ...
+Configurationmenu
 
-     
+          Configuration Menu
+          [0] - Show config
+          [1] - Change timezone
+          [2] - Change token  
 
 
 
