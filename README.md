@@ -6,8 +6,8 @@ Thanks to [Rifting](https://gist.github.com/rifting) for the method. ([post used
  
 ## CLI:
 ### Installation:
-`$ git clone https://github.com/kipruun/FLink-TOTP.git`
-`$ python -m pip intall pytz pyotp colorama`
+`$ git clone https://github.com/kipruun/FLink-TOTP.git
+$ python -m pip intall pytz pyotp colorama`
  
 ### Usage:
 
