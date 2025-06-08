@@ -37,10 +37,7 @@ Configuration menu:
 
 
 ### Config file format:
-
 Name of file : config.json
-
-Format:
 
     {
      "token": "YOUR_SECRET",
