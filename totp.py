@@ -25,7 +25,7 @@ class TOTPElement:
                           Follow this tutorial to get it : https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570#guide-computer
         """
         self.secret = secret
-        self.timezone = ""
+        self.timezone = timezone
         self.base32_secret = base64.b32encode(bytes(secret, encoding="utf-8")).decode('utf-8') # Convert the secret to base32 format
     
     def get_totp_code(self, hour=None) -> str:
