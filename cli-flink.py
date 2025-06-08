@@ -1,49 +1,54 @@
 from totp import TOTPElement
 from colorama import init, Fore
 import os
-
-
-init(autoreset=True)  
-
-
+import json
 
 
 def config_load():
     path = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(path, "config.cfg")
+    file_path = os.path.join(path, "config.json")
     if os.path.exists(file_path):
         with open(file_path, "r") as file:
-            for line in file:
-                config = {}
-                if line.startswith("TIMEZONE="):
-                    config["timezone"] = line.split("=")[1].strip()
-                    print(f"Timezone loaded: {config['timezone']}")
-                if line.startswith("SECRET="):
-                    config["secret"] = line.split("=")[1].strip()
-                    print(f"Secret loaded: {config['secret']}")
-        return config
+            try:
+                json_file = json.loads(file.read())
+            except:
+                json_file = {}
+                f = open(file_path, "w")
+                f.write("{}")
+                f.close()
+            if json_file.get("token"):
+                print("Token loadded:", json_file.get("token"))
+            else:
+                print("Token not found.")
+            if json_file.get("timezone"):
+                print("Timezone loadded:", json_file.get("timezone")) 
+            else:
+                print("Timezone not found")
+        return json_file
     return {}
 
 
 def config_save(timezone=False, secret=False):
-    config = []
-    if timezone != False:
-        config.append(f"TIMEZONE={timezone}")
-    if secret != False:
-        config.append(f"SECRET={secret}")
-    if len(config) > 0:
-        path = os.path.dirname(os.path.abspath(__file__))
-        file_path = os.path.join(path, "config.cfg")
-        with open(file_path, "w") as file:
-            for line in config:
-                file.write(line + "\n")
-        return True
-    return False
+    path = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(path, "config.json")
+    if os.path.exists(file_path):
+        with open(file_path, "r") as file:
+            json_file = json.loads(file.read())
+    else:
+        json_file = {}
+    if secret:
+        json_file["token"] = secret
+    if timezone:
+        json_file["timezone"] = timezone
+    
+    with open(file_path, "w") as f:
+        f.write(json.dumps(json_file))
+        
 
+init(autoreset=True)  
+os.system('cls' if os.name=='nt' else 'clear')
 
-
-
-print(f"""{Fore.CYAN}   ___ _ _       _      _____  ___  _____  ___ 
+header = f"""{Fore.CYAN}   ___ _ _       _      _____  ___  _____  ___ 
   / __\\ (_)_ __ | | __ /__   \\/___\\/__   \\/ _ \\
  / _\\ | | | '_ \\| |/ /   / /\\//  //  / /\\/ /_)/
 / /   | | | | | |   <   / / / \\_//  / / / ___/ 
@@ -52,60 +57,70 @@ print(f"""{Fore.CYAN}   ___ _ _       _      _____  ___  _____  ___
 Creator: Kipruun
 This module generates TOTP codes for a given secret key.
 Please reffer to the documentation for more information.
-
+"""
+menu = f"""
 {Fore.CYAN}[0]{Fore.RESET} - Generate codes for all hours of the current day
 {Fore.CYAN}[1]{Fore.RESET} - Generate code for the current hour
 {Fore.CYAN}[2]{Fore.RESET} - Configuration
-{Fore.CYAN}[3]{Fore.RESET} - Show configuration
-{Fore.CYAN}[4]{Fore.RESET} - Exit
-""")
+{Fore.CYAN}[3]{Fore.RESET} - Exit
+"""
+print(header, menu)
+
+
 config = config_load()
-if "secret" in config:
-    secret = config["secret"]
-else:
-    print(f"\n{Fore.RED}We couldn't find the secret in the config file. We recommend you to set it up in the configuration menu.{Fore.RESET}")    
+if config == {} or config.get("token") == None:
+    print(f"\n{Fore.RED}We couldn't find the secret in the config file.{Fore.RESET}")    
     secret = input("Enter the family link's code: ")
+    config_save(secret=secret)
+else:
+    secret = config.get("token")
+    
 
 
 
-# Check if timezone is set in config
-if "timezone" in config:
-    time_zone = config["timezone"]
+if config.get("timezone") != None:
+    time_zone = config.get("timezone")
 else:
     time_zone = ""
-totp_element = TOTPElement(secret)
-
+totp_element = TOTPElement(secret, timezone=time_zone)
 
 while True:
     choice = input(f"{Fore.CYAN}[?]> {Fore.RESET} ")
-
+    os.system('cls' if os.name=='nt' else 'clear')
+    print(header, menu)
     if choice == "0":
-        print("\nGenerating codes for all hours of the current day...")
-        if time_zone == "":
-            codes = totp_element.get_a_day_codes()
-        else:
-            codes = totp_element.get_a_day_codes(time_zone)
+        print("Generating codes for all hours of the current day...")
+        codes = totp_element.get_a_day_codes()
         for hour, code in codes:
             print(f"Hour: {hour:02d}:00 - Code: {code}")
         print("\nThe code for this hour is: " + totp_element.get_totp_code())
         
     elif choice == "1":
-        print("\nThe code for this hour is: " + Fore.CYAN + totp_element.get_totp_code() + Fore.RESET)
+        print("The code for this hour is: " + Fore.CYAN + totp_element.get_totp_code() + Fore.RESET)
 
     elif choice == "2":
-        print(f"\n{Fore.CYAN}Configuration Menu{Fore.RESET}")
-        print(f"Current timezone: {time_zone if time_zone else 'Not set'}")
-        time = input("Enter the timezone (e.g., Europe/Paris) or leave empty to use the default: ")
-        secret = input("Enter the secret key or leave empty to keep the current one: ")
-        config_save(timezone=time if time else False, secret=secret)
-        print(f"\n{Fore.GREEN}Configuration saved successfully!{Fore.RESET}")
+        os.system('cls' if os.name=='nt' else 'clear')
+        print(header, menu)
+        print(f"{Fore.CYAN}Configuration Menu{Fore.RESET}")
+        print(f"{Fore.CYAN}[0]{Fore.RESET} - Show config")
+        print(f"{Fore.CYAN}[1]{Fore.RESET} - Change timezone")
+        print(f"{Fore.CYAN}[2]{Fore.RESET} - Change token")
+        conf_user_choice = input(f"{Fore.CYAN}[+]>{Fore.RESET}")
+        if conf_user_choice == "0":
+            config = config_load()
+        elif conf_user_choice == "1":
+            print("List of timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List (tz identifiers)")
+            timezone_user = input("Choose timezone: ")
+            config_save(timezone=timezone_user)
+        elif conf_user_choice == "2":
+            token_user = input("Enter your token: ")
+            config_save(secret=token_user)
+
+
         
     elif choice == "3":
-        print(f"\n{Fore.CYAN}Current Configuration{Fore.RESET}")
-        print(f"Timezone: {config.get('timezone', 'Not set')}")
-        print(f"Secret: {config["secret"]}")
-
-    elif choice == "4":
         print(f"\n{Fore.RED}Exiting...{Fore.RESET}")
         break
+
+        
 

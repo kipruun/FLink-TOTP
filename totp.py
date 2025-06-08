@@ -15,7 +15,7 @@ import pytz
 
 
 class TOTPElement:
-    def __init__(self, secret: str):
+    def __init__(self, secret: str, timezone=""):
         """Initialize the TOTPElement with a secret.
 
         Args:
@@ -24,9 +24,10 @@ class TOTPElement:
                           Follow this tutorial to get it : https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570#guide-computer
         """
         self.secret = secret
+        self.timezone = ""
         self.base32_secret = base64.b32encode(bytes(secret, encoding="utf-8")).decode('utf-8') # Convert the secret to base32 format
     
-    def get_totp_code(self, hour=None, timezone="") -> str:
+    def get_totp_code(self, hour=None) -> str:
         """Generate a TOTP code for a specific hour.
 
         Args:
@@ -36,8 +37,8 @@ class TOTPElement:
             str: The generated TOTP code for the specified hour.
         """
               
-        if timezone != "":
-            tz = pytz.timezone(timezone)
+        if self.timezone != "":
+            tz = pytz.timezone(self.timezone)
             date = datetime.datetime.now().astimezone(tz)
         else:
             date = datetime.datetime.now()
@@ -51,7 +52,7 @@ class TOTPElement:
         code = totp.at(timestamp) # Generate the TOTP code for the target time
         return code
 
-    def get_a_day_codes(self, timezone="") -> list:
+    def get_a_day_codes(self) -> list:
         """Generate TOTP codes for all hours of the current day.
 
         Returns:
@@ -59,7 +60,7 @@ class TOTPElement:
         """
         codes = []
         for hour in range(24):
-            code = self.get_totp_code(hour, timezone)
+            code = self.get_totp_code(hour)
             codes.append((hour, code))
         return codes
 
