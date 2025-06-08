@@ -25,8 +25,7 @@ Thanks to [Rifting](https://gist.github.com/rifting) for the method. ([post used
           [0] - Generate codes for all hours of the current day
           [1] - Generate code for the current hour
           [2] - Configuration
-          [3] - Show configuration
-          [4] - Exit
+          [3] - Exit
           ...
 
      
