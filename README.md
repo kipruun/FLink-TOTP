@@ -34,7 +34,9 @@ Configuration menu:
           [0] - Show config
           [1] - Change timezone
           [2] - Change token  
-Config file format:
+
+
+### Config file format:
 
 Name of file : config.json
 
