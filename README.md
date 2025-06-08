@@ -35,7 +35,9 @@ Configuration menu:
           [1] - Change timezone
           [2] - Change token  
 Config file format:
+
 Name of file : config.json
+
 Format:
 
     {
