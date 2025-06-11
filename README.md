@@ -35,8 +35,25 @@ Configuration menu:
           [1] - Change timezone
           [2] - Change token  
 
+---
 
-### Config file format:
+## Serveur (server.py)
+- ⚠️ Server has been only tested on [PythonAnywhere](https://www.pythonanywhere.com)
+
+### Instalation (local)
+1. Go to the script folder
+2. Change config (`config-server.json`). Configure the token and the timezone
+3. Make sure the file `totp.py` is present
+4. Open CMD and type this : `python -m pip install flask fpdf pytz pyotp`
+5. Start `server.py`
+### Installation ([PythonAnywhere](https://www.pythonanywhere.com))
+1. Create an account
+2. Go to your web app
+3. Select the file which follows `WSGI configuration file`
+4. Replace with the code presents in `server.py` file
+5. 
+
+## Config file format:
 Name of file : config.json
 
     {
