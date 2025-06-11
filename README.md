@@ -2,12 +2,13 @@
 # Family TOTP generator
 Thanks to [Rifting](https://gist.github.com/rifting) for the method. ([post used](https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570?permalink_comment_id=5180196#gistcomment-5180196))
 
-🚧 Time zone should be in this format (tz identifier) : [https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List)
- 
+- 🚧 Time zone should be in this format (tz identifier) : [https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) </br>
+- Find your token: [https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570#guide-computer](https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570#guide-computer)
+ ---
 ## CLI:
 ### Installation:
-`$ git clone https://github.com/kipruun/FLink-TOTP.git
-$ python -m pip intall pytz pyotp colorama`
+    $ git clone https://github.com/kipruun/FLink-TOTP.git
+    $ python -m pip intall pytz pyotp colorama
  
 ### Usage:
 
@@ -35,9 +36,28 @@ Configuration menu:
           [1] - Change timezone
           [2] - Change token  
 
+---
 
-### Config file format:
-Name of file : config.json
+## Serveur (server.py)
+- ⚠️ Server has been only tested on [PythonAnywhere](https://www.pythonanywhere.com)
+
+### Instalation (local)
+1. Go to the script folder
+2. Change config (`config-server.json`). Configure the token and the timezone
+3. Make sure the file `totp.py` is present
+4. Open CMD and type this : `python -m pip install flask fpdf pytz pyotp`
+5. Start `server.py`
+### Installation ([PythonAnywhere](https://www.pythonanywhere.com))
+1. Create an account
+2. Go to your web app
+3. Select the file which follows `WSGI configuration file`
+4. Replace with the code presents in `server.py` file
+5. Create an environement and set it up. Install dependecies.
+6. Make sure `totp.py` is in the same directory as `server.py`
+7. Reload app
+--- 
+## Config file format:
+Name of file : config.json / config-server.json
 
     {
      "token": "YOUR_SECRET",
