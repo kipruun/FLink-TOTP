@@ -115,10 +115,10 @@ while True:
         codes = totp_element.get_a_day_codes()
         for hour, code in codes:
             print(f"Hour: {hour:02d}:00 - Code: {code}")
-        print("\nThe code for this hour is: " + totp_element.get_totp_code())
+        print("\nThe code for this hour is: " + totp_element.get_totp_code()[0])
         
     elif choice == "1":
-        print("The code for this hour is: " + Fore.CYAN + totp_element.get_totp_code() + Fore.RESET)
+        print("The code for this hour is: " + Fore.CYAN + totp_element.get_totp_code()[0] + Fore.RESET)
 
     elif choice == "2":
         os.system('cls' if os.name=='nt' else 'clear')
