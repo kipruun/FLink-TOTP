@@ -51,13 +51,13 @@ def index():
         html += f"<p>Timezone calculated:  {timezone}</p>"
 
     except: # If there's an error in getting the timezone, use a default
-        timezone = "Europe/Paris"
+        timezone = DEFAULT_TIMEZONE
         html += f"<p>Error in the calcul of the timezone /// {DEFAULT_TIMEZONE} use by default</p>"
     
     try: # Set the timezone and get the current date
         tz = pytz.timezone(timezone)
         date = datetime.datetime.now().astimezone(tz)
-        totp_codes = TOTPElement(SECRET).get_a_day_codes(timezone=tz)
+        totp_codes = TOTPElement(SECRET, timezone).get_a_day_codes()
     except: # If there's an error in setting the timezone, use the server's time
         date = datetime.datetime.now()
         html += f"<p>Error when the timezone was configured /// Server's time used</p>"
@@ -66,7 +66,7 @@ def index():
     html += f"<h1>Codes for the {date.day} - {date.month}</h1>" # Add the date to the HTML
 
     for heure, code in totp_codes: # Loop through the TOTP codes and add them to the HTML
-        html += f"<p><b>Hour: {heure:02d}:00</b> - Code: {code}</p>"
+        html += f"<p><b>Hour: {heure}:00</b> - Code: {code}</p>"
 
     html += "</body></html>" # Close the HTML structure
 
@@ -86,13 +86,13 @@ def pdf():
         html += f"<p>Timezone calculated:  {timezone}</p>"
 
     except: # If there's an error in getting the timezone, use a default
-        timezone = "Europe/Paris"
+        timezone = DEFAULT_TIMEZONE
         html += f"<p>Error in the calcul of the timezone /// {DEFAULT_TIMEZONE} use by default</p>"
     
     try: # Set the timezone and get the current date
         tz = pytz.timezone(timezone)
         date = datetime.datetime.now().astimezone(tz)
-        totp_codes = TOTPElement(SECRET).get_a_day_codes(timezone=tz)
+        totp_codes = TOTPElement(SECRET, timezone).get_a_day_codes()
     except: # If there's an error in setting the timezone, use the server's time
         date = datetime.datetime.now()
         html += f"<p>Error when the timezone was configured /// Server's time used</p>"

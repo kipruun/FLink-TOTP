@@ -20,14 +20,14 @@ class TOTPElement:
         """Initialize the TOTPElement with a secret.
 
         Args:
-            secret (str): The secret key used to generate TOTP codes. 
-                          It should be a string of characters. 
+            secret (str): The secret key used to generate TOTP codes.
+                          It should be a string of characters.
                           Follow this tutorial to get it : https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570#guide-computer
         """
         self.secret = secret
         self.timezone = timezone
         self.base32_secret = base64.b32encode(bytes(secret, encoding="utf-8")).decode('utf-8') # Convert the secret to base32 format
-    
+
     def get_totp_code(self, hour=None) -> str:
         """Generate a TOTP code for a specific hour.
 
@@ -37,21 +37,25 @@ class TOTPElement:
         Returns:
             str: The generated TOTP code for the specified hour.
         """
-              
+
         if self.timezone != "":
             tz = pytz.timezone(self.timezone)
-            date = datetime.datetime.now().astimezone(tz)
+            date = datetime.datetime.now(tz)
         else:
+            tz = None
             date = datetime.datetime.now()
-
-        if not hour:
+        if hour == None:
             hour = date.hour # Use the current hour if no hour is provided
-      
+
         target_time = datetime.datetime(date.year, date.month, date.day, hour, 0, 0) # Create a target time with the specified hour and current date
+        if tz:
+            target_time = tz.localize(target_time)
+        else:
+            pass
         timestamp = int(target_time.timestamp()) # Convert the target time to a timestamp
         totp = pyotp.TOTP(self.base32_secret, interval=60) # Create a TOTP object with the base32 secret and a 60-second interval
         code = totp.at(timestamp) # Generate the TOTP code for the target time
-        return code
+        return code, hour
 
     def get_a_day_codes(self) -> list:
         """Generate TOTP codes for all hours of the current day.
@@ -61,7 +65,7 @@ class TOTPElement:
         """
         codes = []
         for hour in range(24):
-            code = self.get_totp_code(hour)
+            code, hour = self.get_totp_code(hour)
             codes.append((hour, code))
         return codes
 
@@ -69,9 +73,9 @@ class TOTPElement:
 
 
 
-                    
-        
 
-        
+
+
+
 if __name__ == "__main__":
     os.system("python cli-flink.py")
