@@ -3,7 +3,8 @@
 Thanks to [Rifting](https://gist.github.com/rifting) for the method. ([post used](https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570?permalink_comment_id=5180196#gistcomment-5180196))
 
 🚧 Time zone should be in this format (tz identifier) : [https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List)
- 
+ Find your token: [https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570#guide-computer](https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570#guide-computer)
+ ---
 ## CLI:
 ### Installation:
 `$ git clone https://github.com/kipruun/FLink-TOTP.git
@@ -51,10 +52,11 @@ Configuration menu:
 2. Go to your web app
 3. Select the file which follows `WSGI configuration file`
 4. Replace with the code presents in `server.py` file
-5. 
-
+5. Create an environement and set it up.
+6. Make sure `totp.py` is in the same directory as `server.py`
+--- 
 ## Config file format:
-Name of file : config.json
+Name of file : config.json / config-server.json
 
     {
      "token": "YOUR_SECRET",
