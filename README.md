@@ -52,8 +52,9 @@ Configuration menu:
 2. Go to your web app
 3. Select the file which follows `WSGI configuration file`
 4. Replace with the code presents in `server.py` file
-5. Create an environement and set it up.
+5. Create an environement and set it up. Install dependeces
 6. Make sure `totp.py` is in the same directory as `server.py`
+7. Reload app
 --- 
 ## Config file format:
 Name of file : config.json / config-server.json
