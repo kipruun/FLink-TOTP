@@ -2,7 +2,7 @@
 # Family TOTP generator
 Thanks to [Rifting](https://gist.github.com/rifting) for the method. ([post used](https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570?permalink_comment_id=5180196#gistcomment-5180196))
 
-🚧 Time zone should be in this format (tz identifier) : [https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List)
+🚧 Time zone should be in this format (tz identifier) : [https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) </br>
 Find your token: [https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570#guide-computer](https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570#guide-computer)
  ---
 ## CLI:
