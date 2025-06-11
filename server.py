@@ -17,12 +17,33 @@ from totp import TOTPElement
 import requests
 from flask import request
 import pytz
+import os
+import json
+import sys
 
 
-#------------------------- Configuration -------------------------
-SECRET = "YOUR TOKEN HERE" # Replace with your TOTP secret key, follow this tutorial to get it : https://gist.github.com/rifting/732a45adf8ebacfa0e1fda0a66662570#guide-computer
-DEFAULT_TIMEZONE = "Europe/Paris" # Default timezone if the user's timezone cannot be determined
-#------------------------------------------------------------------
+path = os.path.dirname(os.path.abspath(__file__)) # Get current file path
+file_path = os.path.join(path, "config-server.json")
+if os.path.exists(file_path):
+    with open(file_path, "r") as file:
+        try:
+            json_file = json.loads(file.read()) # Load config as json
+            if json_file.get("token"):
+                SECRET = json_file.get("token")
+            else:
+                print("JSON NOT CONFIGURED. THE SERVER COULD'NT START")
+                sys.exit(1)
+            if json_file.get("timezone"):
+                DEFAULT_TIMEZONE = json_file.get("timezone")
+            else:
+                DEFAULT_TIMEZONE = "Europe/London"
+        except:
+            print("JSON NOT CONFIGURED. THE SERVER COULD'NT START")
+            sys.exit(1)
+
+else:
+    print("JSON NOT CONFIGURED. THE SERVER COULD'NT START")
+    sys.exit(1)
 
 
 
