@@ -66,4 +66,4 @@ Name of file : config.json / config-server.json
 
 
 <br/>
-Sorry I'm not an english so that mean there are many errors.
+Sorry I'm not an english so that means there are many errors.
